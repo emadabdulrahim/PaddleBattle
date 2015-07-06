@@ -22,6 +22,7 @@ class Player: CCSprite {
     var previousTouch = CGPointZero
     weak var paddle : Paddle!
     var playerPosition : PlayerPosition = .Bottom
+    var playerAlive = true
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
@@ -51,12 +52,11 @@ class Player: CCSprite {
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        rotateCircle(touch)
+        rotatePaddle(touch)
         previousTouch = touch.locationInNode(self)
     }
     
-    
-    private func rotateCircle(touch: CCTouch) {
+    private func rotatePaddle(touch: CCTouch) {
         let touchLocation = touch.locationInNode(self)
         var delta : CGFloat
         switch playerPosition {
@@ -72,14 +72,10 @@ class Player: CCSprite {
         
         delta = min(6, delta)
         delta = max(-6, delta)
-        //        println("Previous Touch \(previousTouchX)")
-        //        println("touchLocation \(touchLocation)")
         var oldRotation = rotation
-        println("Old Rotation \(oldRotation)")
         var result = rotation + Float(delta)
         result = min(maxRotation, result)
         result = max(-maxRotation, result)
-        println("Rotation \(result)")
         rotation = result
         
     }

@@ -52,7 +52,7 @@
 			<key>affectedByGravity</key>
 			<true/>
 			<key>allowsRotation</key>
-			<false/>
+			<true/>
 			<key>bodyShape</key>
 			<integer>0</integer>
 			<key>collisionCategories</key>
@@ -66,9 +66,9 @@
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
-			<true/>
+			<false/>
 			<key>elasticity</key>
-			<real>0.30000001192092896</real>
+			<real>1</real>
 			<key>friction</key>
 			<real>0.30000001192092896</real>
 			<key>points</key>
@@ -79,14 +79,14 @@
 				</array>
 				<array>
 					<real>0.0</real>
-					<real>30</real>
+					<real>40</real>
 				</array>
 				<array>
-					<real>235</real>
-					<real>30</real>
+					<real>230</real>
+					<real>40</real>
 				</array>
 				<array>
-					<real>235</real>
+					<real>230</real>
 					<real>0.0</real>
 				</array>
 			</array>
@@ -94,16 +94,16 @@
 			<array>
 				<array>
 					<array>
-						<real>235</real>
+						<real>230</real>
 						<real>0.0</real>
 					</array>
 					<array>
-						<real>235</real>
-						<real>30</real>
+						<real>230</real>
+						<real>40</real>
 					</array>
 					<array>
 						<real>0.0</real>
-						<real>30</real>
+						<real>40</real>
 					</array>
 					<array>
 						<real>0.0</real>
@@ -143,8 +143,8 @@
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>235</real>
-					<real>30</real>
+					<real>230</real>
+					<real>40</real>
 					<integer>0</integer>
 					<integer>0</integer>
 				</array>

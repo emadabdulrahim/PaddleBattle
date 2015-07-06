@@ -15,31 +15,55 @@ class PlayerContainer : CCNode {
     
     weak var player : Player!
     weak var scoreLabel : CCLabelTTF!
+    weak var goal : Goal!
+    weak var circle : CCSprite!
     
-    var score : Int = 4 {
+    var score : Int = 10 {
         didSet {
             // update label
             // label.string = score
-            scoreLabel.stopAllActions()
-            scoreLabel.runAction(CCActionSequence(array: [CCActionScaleTo(duration: 0.15, scale: 1.15), CCActionScaleTo(duration: 0.15, scale: 1.0) ]))
-            scoreLabel.string = String(score)
+            if score >= 0 {
+                updateLabel(score)
+            }
+            
+            if score == 0 {
+                removePlayer()
+                return
+            }
         }
+    }
+    
+    func updateLabel(score: Int) {
+        scoreLabel.stopAllActions()
+        scoreLabel.runAction(CCActionSequence(array: [CCActionScaleTo(duration: 0.1, scale: 1.15), CCActionScaleTo(duration: 0.1, scale: 1.0) ]))
+        scoreLabel.string = String(score)
     }
     
     func didLoadFromCCB() {
     }
     
-    override func update(delta: CCTime) {
-        if score == 0 {
-            if let player = player.parent {
-                player.removeFromParent()
-                deadPlayerCounter++
-                println(deadPlayerCounter)
+    func removePlayer() {
+        if player.playerAlive == true {
+            for child in children {
+                if let thisPlayer = child as? Player {
+                    thisPlayer.playerAlive = false
+                    removeChild(thisPlayer, cleanup: true)
+                } else if let circle = child as? CCSprite {
+                    circle.removeFromParentAndCleanup(true)
+                } else if let scoreLabel = child as? CCLabelTTF {
+                    scoreLabel.removeFromParentAndCleanup(true)
+                } else if let goal = child as? Goal {
+                    runAction(CCActionSequence(array: [CCActionDelay(duration: 0.5), CCActionCallBlock(block: { () -> Void in
+                        goal.physicsBody.sensor = false
+                    })]))
+                }
             }
+            deadPlayerCounter++
         }
         
-        if deadPlayerCounter == 3 {
-            gameEnded = true
-        }
+    }
+    
+    override func update(delta: CCTime) {
+    
     }
 }
