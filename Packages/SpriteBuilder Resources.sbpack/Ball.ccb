@@ -64,7 +64,7 @@
 			<key>cornerRadius</key>
 			<real>7.3665308952331543</real>
 			<key>density</key>
-			<real>0.5</real>
+			<real>1</real>
 			<key>dynamic</key>
 			<true/>
 			<key>elasticity</key>
