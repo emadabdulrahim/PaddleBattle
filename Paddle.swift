@@ -9,5 +9,5 @@
 import Foundation
 
 class Paddle: CCSprite {
-    
+    weak var imageNode : CCSprite!
 }

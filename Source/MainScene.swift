@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 
 class MainScene: CCNode, CCPhysicsCollisionDelegate {
@@ -25,15 +26,16 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
     var timeToStart : Int = 4
     var countdownLabel : CCLabelTTF!
     var restartButton : CCButton!
-    var speed : CGFloat = 1.5
+    var speed : CGFloat = 1.6
     let ballLocation : CGFloat = 40
     var ballCorner : BallCorner = .BottomLeft
     var ballTimeManager : CCTimer!
     var labelTimeManager : CCTimer!
     var difficultyTimer : CCTimer!
     
-    let maxSpeed = CGFloat(550)
-    let minSpeed = CGFloat(220)
+    let maxSpeed = CGFloat(600)
+    let minSpeed = CGFloat(250)
+    var intervalTime = CCTime(15)
     
     
     
@@ -42,10 +44,17 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
         userInteractionEnabled = true
         multipleTouchEnabled = true
 //        gamePhysicsNode.debugDraw = true
+        gamePhysicsNode.zOrder = 100
         gamePhysicsNode.collisionDelegate = self
         gameEnded = false
         deadPlayerCounter = 0
         restartButton.visible = false
+        
+//        CCDirector.sharedDirector().scheduler.timeScale = 0.5
+//        //self.scale = 1.5
+//
+//        var actionScale:CCActionScaleBy = CCActionScaleBy(duration: 1.0, scale: 0.50)
+//        self.runAction(actionScale)
     }
     
     func setupCountDownLabel() {
@@ -57,7 +66,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
         }
         countdownLabel.string = labelText
         
-        var labelAction = CCActionSequence(array: [CCActionScaleBy(duration:0.4, scale: 1.5), CCActionEaseIn(action: CCActionFadeOut(duration: 0.4), rate: 2)])
+        var labelAction = CCActionSequence(array: [CCActionEaseInOut(action: CCActionScaleBy(duration:0.4, scale: 1.5), rate: 5), CCActionFadeOut(duration: 0.4)])
         countdownLabel.runAction(labelAction)
         
         if timeToStart == 0 {
@@ -66,24 +75,29 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
     }
     
     override func onEnterTransitionDidFinish() {
-        playerBot.player.playerPosition = .Bottom
-        playerTop.player.playerPosition = .Top
-        playerLeft.player.playerPosition = .Left
-        playerRight.player.playerPosition = .Right
+        addChild(playerBot.scoreManager)
+        playerBot.scoreManager.position = CGPoint(x: contentSizeInPoints.width / 2, y: contentSizeInPoints.height / 2)
+        
+        addChild(playerTop.scoreManager)
+        playerTop.scoreManager.position = CGPoint(x: contentSizeInPoints.width / 2, y: contentSizeInPoints.height / 2)
+        
+        addChild(playerLeft.scoreManager)
+        playerLeft.scoreManager.position = CGPoint(x: contentSizeInPoints.width / 2, y: contentSizeInPoints.height / 2)
+
+        addChild(playerRight.scoreManager)
+        playerRight.scoreManager.position = CGPoint(x: contentSizeInPoints.width / 2, y: contentSizeInPoints.height / 2)
+
         players = [playerBot, playerTop, playerLeft, playerRight]
         
         labelTimeManager = schedule("setupCountDownLabel", interval: 1, repeat: UInt(timeToStart), delay: 0)
-        ballTimeManager = schedule("createNewBall", interval: 15, repeat: 99999, delay: CCTime(timeToStart))
-        difficultyTimer = schedule("increaseDiffculty", interval: 30, repeat: 99999, delay: 30)
+        ballTimeManager = schedule("createNewBall", interval: 5, repeat: 99999, delay: 0)
+        difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*2)
     }
     
     func increaseDiffculty() {
-        speed *= 1.2
-//        if velocityY > 400 || velocityX > 400 {
-//            velocityX = 400
-//            velocityY = 400
-//        }
-//        gameTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "createNewBall", userInfo: nil, repeats: true)
+        speed *= 1.5
+        intervalTime *= 0.6
+        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 5)
     }
     
     func setupSpawnParticle(location: CGPoint) {
@@ -126,6 +140,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
         ball.physicsBody.allowsRotation = false
         balls.append(ball)
         addTrail(ball)
+        
+//        let zoomAction = CCActionSpawn(array: [CCActionMoveTo(duration: 0.5, position: ball.position), CCActionScaleBy(duration: 0.5, scale: 1.3)])
+//        self.runAction(zoomAction)
     }
     
 //    add particle effect to the ball
@@ -137,6 +154,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
         trail.zOrder = -1
     }
     
+//    
     func spawnBallAtLocation(corner: UInt32) -> CGPoint {
         var ballPosition : CGPoint
         switch corner {
@@ -158,40 +176,54 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
         return ballPosition
     }
     
+//    Ball colliding with Goal Node, decrease player score
     func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, goal nodeA: Goal!, ball nodeB: Ball!) -> ObjCBool {
         println("Collision Happened")
+        if gameEnded == true {
+            return false
+        }
         if let playerContainer = nodeA.parent as? PlayerContainer {
             playerContainer.score--
         }
         return true
     }
     
+    func pauseGame() {
+        paused = !paused
+    }
+    
+//    shake paddle when ball hits it hard
     func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, paddle nodeA: Paddle!, ball nodeB: Ball!) {
         println("Paddle Hit")
         let energy = pair.totalKineticEnergy
-        if let player = nodeA.parent as? Player {
-            if energy > 150 {
-                shakePaddle(player)
+        let ball = nodeB
+        println("PADDLE energy \(CGFloat(energy))")
+        let player = nodeA.parent
+        if CGRectContainsPoint(player.boundingBox(), nodeB.position) {
+            return
+        } else {
+            if let paddle = nodeA.parent as? Paddle {
+                if energy > 500 {
+                    gamePhysicsNode.space.addPostStepBlock({ () -> Void in
+                        paddle.imageNode.animationManager.runAnimationsForSequenceNamed("paddleHardHit")
+                        }, key: paddle)
+                } else {
+                    gamePhysicsNode.space.addPostStepBlock({ () -> Void in
+                        paddle.imageNode.animationManager.runAnimationsForSequenceNamed("paddleSoftHit")
+                        }, key: paddle)
+                }
             }
         }
     }
     
+//    add spark particle when ball bounce on edges
     func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, edge nodeA: CCPhysicsNode!, ball nodeB: Ball!) {
         let energy = pair.totalKineticEnergy
-        println("energy \(CGFloat(energy))")
-//        if energy > 5 {
+//        println("energy \(CGFloat(energy))")
         let spark = CCBReader.load("Spark") as! CCParticleSystem
         spark.position = nodeB.position
         spark.particlePositionType = CCParticleSystemPositionType.Free
         addChild(spark)
-//        }
-    }
-    
-    func shakePaddle(player: Player) {
-        var shakeAction = CCActionRepeat(action: CCActionSequence(array: [CCActionMoveBy(duration: 0.01, position: CGPoint(x: 2, y: 2)),
-            CCActionMoveBy(duration: 0.01, position: CGPoint(x: 0, y: -2)), CCActionMoveBy(duration: 0.01, position: CGPoint(x: -2, y: 2)), CCActionMoveBy(duration: 0.01, position: CGPoint(x: 0, y: -2))]), times: 4)
-        player.stopAllActions()
-        player.runAction(shakeAction)
     }
     
     
@@ -216,7 +248,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
             for playerContainer in players {
                 for child in playerContainer.children {
                     if let player = child as? Player {
-                        if player.playerAlive == true {
+                        if player.didLose == true {
                             displayWonLabel(playerContainer.player.paddle.name)
                         }
                     }
@@ -231,7 +263,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
             for child in gamePhysicsNode.children {
                 if let ball = child as? Ball {
                     if CGRectContainsPoint(playBox.boundingBox(), ball.position) {
-                        println("Ball speed \(ccpLength(ball.physicsBody.velocity))")
+//                        println("Ball speed \(ccpLength(ball.physicsBody.velocity))")
 //                        Clamp the speed of the ball manually between Min and Max Speed values
                         if ccpLength(ball.physicsBody.velocity) > maxSpeed {
                             println("TOO FAST")
@@ -243,11 +275,11 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
                         
 //                        if the ball get stuck on a certain path, give it impulse to unstuck it
                         if ball.physicsBody.velocity.y < 10 && ball.physicsBody.velocity.y > -10 {
-                            ball.physicsBody.velocity.y += 2
+                            ball.physicsBody.velocity.y += 4
                         }
                         
                         if ball.physicsBody.velocity.x < 10 && ball.physicsBody.velocity.x > -10 {
-                            ball.physicsBody.velocity.x += 2
+                            ball.physicsBody.velocity.x += 4
                         }
                         
                     } else {

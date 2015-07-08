@@ -93,6 +93,8 @@
 		BC5399DA1A44DCC90063F482 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D51A44DCC90063F482 /* GLActivityKit.framework */; };
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
+		F58770391B4B3E2900B0FDF3 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58770381B4B3E2900B0FDF3 /* StartScene.swift */; };
+		F587703D1B4C8D6800B0FDF3 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = F587703C1B4C8D6800B0FDF3 /* Score.swift */; };
 		F5D743A11B45D1D800090F81 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D743A01B45D1D800090F81 /* Goal.swift */; };
 		F5D743B81B4621DA00090F81 /* PlayerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D743B71B4621DA00090F81 /* PlayerContainer.swift */; };
 		F5F9B3C31B4480FD003F481B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B3C21B4480FD003F481B /* Player.swift */; };
@@ -216,6 +218,8 @@
 		BC5399D61A44DCC90063F482 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
+		F58770381B4B3E2900B0FDF3 /* StartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
+		F587703C1B4C8D6800B0FDF3 /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		F5D743A01B45D1D800090F81 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		F5D743B71B4621DA00090F81 /* PlayerContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerContainer.swift; sourceTree = "<group>"; };
 		F5F9B3C21B4480FD003F481B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -445,10 +449,12 @@
 			isa = PBXGroup;
 			children = (
 				7A40362019DDEF0D007B6E8F /* Platforms */,
+				F58770381B4B3E2900B0FDF3 /* StartScene.swift */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
 				F5D743B71B4621DA00090F81 /* PlayerContainer.swift */,
-				F5D743A01B45D1D800090F81 /* Goal.swift */,
 				F5F9B3C21B4480FD003F481B /* Player.swift */,
+				F587703C1B4C8D6800B0FDF3 /* Score.swift */,
+				F5D743A01B45D1D800090F81 /* Goal.swift */,
 				F5F9B3C41B449277003F481B /* Ball.swift */,
 				F5F9B3C61B44ACBB003F481B /* Paddle.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
@@ -832,9 +838,11 @@
 				F5F9B3C31B4480FD003F481B /* Player.swift in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				F5F9B3C51B449277003F481B /* Ball.swift in Sources */,
+				F587703D1B4C8D6800B0FDF3 /* Score.swift in Sources */,
 				F5F9B3C71B44ACBB003F481B /* Paddle.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
+				F58770391B4B3E2900B0FDF3 /* StartScene.swift in Sources */,
 				F5D743A11B45D1D800090F81 /* Goal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

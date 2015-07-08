@@ -64,7 +64,7 @@
 				<string>Position</string>
 				<key>value</key>
 				<array>
-					<real>30</real>
+					<real>20</real>
 					<real>0.0</real>
 					<integer>0</integer>
 					<integer>0</integer>
@@ -101,7 +101,7 @@
 				<key>type</key>
 				<string>IntegerLabeled</string>
 				<key>value</key>
-				<integer>0</integer>
+				<integer>1</integer>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -267,9 +267,9 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>gravity</string>
+				<string>startRadius</string>
 				<key>type</key>
-				<string>Point</string>
+				<string>FloatVar</string>
 				<key>value</key>
 				<array>
 					<real>0.0</real>
@@ -278,7 +278,7 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>speed</string>
+				<string>endRadius</string>
 				<key>type</key>
 				<string>FloatVar</string>
 				<key>value</key>
@@ -289,18 +289,7 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>tangentialAccel</string>
-				<key>type</key>
-				<string>FloatVar</string>
-				<key>value</key>
-				<array>
-					<real>0.0</real>
-					<real>0.0</real>
-				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>radialAccel</string>
+				<string>rotatePerSecond</string>
 				<key>type</key>
 				<string>FloatVar</string>
 				<key>value</key>

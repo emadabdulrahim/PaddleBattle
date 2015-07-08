@@ -17,12 +17,11 @@ import Foundation
 class Player: CCSprite {
     
     
-    weak var goal : Goal!
     let maxRotation : Float = 45.0
     var previousTouch = CGPointZero
     weak var paddle : Paddle!
     var playerPosition : PlayerPosition = .Bottom
-    var playerAlive = true
+    var didLose = false
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
@@ -35,16 +34,37 @@ class Player: CCSprite {
             for child in children {
                 if let paddle = child as? Paddle {
                     let spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-\(paddle.name).png")
-                    paddle.spriteFrame = spriteFrame
+                    paddle.imageNode.spriteFrame = spriteFrame
+                    
+                    if paddle.name == "pink" {
+                        playerPosition = .Left
+                    }
+                    if paddle.name == "red" {
+                        playerPosition = .Right
+                    }
+                    if paddle.name == "green" {
+                        playerPosition = .Top
+                    }
                 }
             }
         }
     }
     
     override func update(delta: CCTime) {
-        if gameEnded == true {
-            userInteractionEnabled = false
-        }
+        
+    }
+    
+//
+    func eliminatePlayer() {
+        didLose = true
+        deadPlayerCounter++
+        stopAllActions()
+        userInteractionEnabled = false
+        multipleTouchEnabled = false
+        runAction(CCActionSequence(array: [CCActionRotateBy(duration: 1.25, angle: 180), CCActionCallBlock(block: { () -> Void in
+            let playerContainer = self.parent as! PlayerContainer
+            playerContainer.goal.physicsBody.sensor = false
+        })]))
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
@@ -57,26 +77,28 @@ class Player: CCSprite {
     }
     
     private func rotatePaddle(touch: CCTouch) {
-        let touchLocation = touch.locationInNode(self)
-        var delta : CGFloat
-        switch playerPosition {
-        case .Top:
-            delta = -(touchLocation.x - previousTouch.x)
-        case .Bottom:
-            delta = (touchLocation.x - previousTouch.x)
-        case .Left:
-            delta = -(touchLocation.y - previousTouch.y)
-        case .Right:
-            delta = (touchLocation.y - previousTouch.y)
+        if !didLose {
+            let touchLocation = touch.locationInNode(self)
+            var delta : CGFloat
+            switch playerPosition {
+            case .Top:
+                delta = -(touchLocation.x - previousTouch.x)
+            case .Bottom:
+                delta = (touchLocation.x - previousTouch.x)
+            case .Left:
+                delta = -(touchLocation.y - previousTouch.y)
+            case .Right:
+                delta = (touchLocation.y - previousTouch.y)
+            }
+            
+            delta = min(4, delta)
+            delta = max(-4, delta)
+            var oldRotation = rotation
+            var result = rotation + Float(delta)
+            result = min(maxRotation, result)
+            result = max(-maxRotation, result)
+            rotation = result
         }
-        
-        delta = min(6, delta)
-        delta = max(-6, delta)
-        var oldRotation = rotation
-        var result = rotation + Float(delta)
-        result = min(maxRotation, result)
-        result = max(-maxRotation, result)
-        rotation = result
         
     }
 }
