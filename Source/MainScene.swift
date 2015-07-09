@@ -1,6 +1,16 @@
 import Foundation
 import UIKit
 
+enum GameStatus {
+    case Starting
+    case Running
+    case Paused
+    case Ended
+}
+
+var gameStatus : GameStatus = .Starting
+
+
 
 class MainScene: CCNode, CCPhysicsCollisionDelegate {
     
@@ -19,6 +29,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
     weak var playBox : CCNode!
     weak var playerWonLabel : CCLabelTTF!
     weak var gamePhysicsNode : CCPhysicsNode!
+    weak var popupLayer : CCSprite!
     
     var balls = [Ball]()
     var gameTimer : NSTimer?
@@ -46,9 +57,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
 //        gamePhysicsNode.debugDraw = true
         gamePhysicsNode.zOrder = 100
         gamePhysicsNode.collisionDelegate = self
-        gameEnded = false
+        gameStatus = .Running
         deadPlayerCounter = 0
-        restartButton.visible = false
+//        restartButton.visible = false
         
 //        CCDirector.sharedDirector().scheduler.timeScale = 0.5
 //        //self.scale = 1.5
@@ -65,6 +76,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
             labelText = "GO!"
         }
         countdownLabel.string = labelText
+        countdownLabel.zOrder = 300
         
         var labelAction = CCActionSequence(array: [CCActionEaseInOut(action: CCActionScaleBy(duration:0.4, scale: 1.5), rate: 5), CCActionFadeOut(duration: 0.4)])
         countdownLabel.runAction(labelAction)
@@ -90,13 +102,15 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
         players = [playerBot, playerTop, playerLeft, playerRight]
         
         labelTimeManager = schedule("setupCountDownLabel", interval: 1, repeat: UInt(timeToStart), delay: 0)
-        ballTimeManager = schedule("createNewBall", interval: 5, repeat: 99999, delay: 0)
+        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: CCTime(timeToStart))
         difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*2)
     }
     
     func increaseDiffculty() {
         speed *= 1.5
         intervalTime *= 0.6
+        
+        ballTimeManager.invalidate()
         ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 5)
     }
     
@@ -179,7 +193,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
 //    Ball colliding with Goal Node, decrease player score
     func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, goal nodeA: Goal!, ball nodeB: Ball!) -> ObjCBool {
         println("Collision Happened")
-        if gameEnded == true {
+        if gameStatus == .Ended {
             return false
         }
         if let playerContainer = nodeA.parent as? PlayerContainer {
@@ -190,6 +204,16 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
     
     func pauseGame() {
         paused = !paused
+        gameStatus = .Paused
+        showPopupLayer()
+    }
+    
+    func showPopupLayer() {
+        popupLayer.zOrder = 200
+        restartButton.zOrder = 250
+        popupLayer.visible = true
+        popupLayer.animationManager.runAnimationsForSequenceNamed("showPopup")
+        restartButton.visible = true
     }
     
 //    shake paddle when ball hits it hard
@@ -243,13 +267,14 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
     }
     
     override func update(delta: CCTime) {
+//        find the winner play and call displayWonLabel method with player color
         if deadPlayerCounter == 3 {
-            gameEnded = true
+            gameStatus = .Ended
             for playerContainer in players {
                 for child in playerContainer.children {
                     if let player = child as? Player {
-                        if player.didLose == true {
-                            displayWonLabel(playerContainer.player.paddle.name)
+                        if player.didLose == false {
+                            displayWonLabel(player.paddle.name)
                         }
                     }
                 }
@@ -275,11 +300,11 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
                         
 //                        if the ball get stuck on a certain path, give it impulse to unstuck it
                         if ball.physicsBody.velocity.y < 10 && ball.physicsBody.velocity.y > -10 {
-                            ball.physicsBody.velocity.y += 4
+                            ball.physicsBody.velocity.y *= 5
                         }
                         
                         if ball.physicsBody.velocity.x < 10 && ball.physicsBody.velocity.x > -10 {
-                            ball.physicsBody.velocity.x += 4
+                            ball.physicsBody.velocity.x *= 5
                         }
                         
                     } else {
@@ -288,7 +313,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
                         balls.removeAtIndex(index!)
                         
 //        always keep a ball in the play field
-                        if balls.count == 0 && gameEnded == false {
+                        if balls.count == 0 && gameStatus == .Running {
                             runAction(CCActionSequence(array: [CCActionDelay(duration: 0.5), CCActionCallBlock(block: { () -> Void in
                                 self.createNewBall()
                             })]))
@@ -297,6 +322,10 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate {
                 }
             }
         }
+        
+    }
+    
+    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         
     }
     

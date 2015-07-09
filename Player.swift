@@ -5,12 +5,14 @@
 //  Created by Emad Mohamad on 7/1/15.
 //  Copyright (c) 2015 Apportable. All rights reserved.
 //
+
 enum PlayerPosition {
     case Top
     case Bottom
     case Left
     case Right
 }
+
 
 import Foundation
 
@@ -50,8 +52,10 @@ class Player: CCSprite {
         }
     }
     
-    override func update(delta: CCTime) {
-        
+    override func onEnterTransitionDidFinish() {
+        if didLose {
+            eliminatePlayer()
+        }
     }
     
 //
@@ -68,12 +72,25 @@ class Player: CCSprite {
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        
+        if gameStatus == .Starting {
+            if !didLose {
+                stopAllActions()
+                runAction(CCActionSequence(array: [CCActionRotateBy(duration: 1.25, angle: 180), CCActionCallBlock(block: { () -> Void in
+                })]))
+                didLose = true
+            } else {
+                stopAllActions()
+                runAction(CCActionRotateTo(duration: 0.25, angle: 0))
+                didLose = false
+            }
+        }
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        rotatePaddle(touch)
-        previousTouch = touch.locationInNode(self)
+        if gameStatus == .Running {
+            rotatePaddle(touch)
+            previousTouch = touch.locationInNode(self)
+        }
     }
     
     private func rotatePaddle(touch: CCTouch) {

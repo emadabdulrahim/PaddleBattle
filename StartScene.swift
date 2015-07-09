@@ -9,15 +9,19 @@
 import Foundation
 
 class StartScene: CCScene {
+    
+    weak var bluePlayer : PlayerContainer!
+    weak var pinkPlayer : PlayerContainer!
+    weak var greenPlayer : PlayerContainer!
+    weak var redPlayer : PlayerContainer!
+    var menuNode : Menu!
+
 
     func didLoadFromCCB() {
-        
     }
     
-    func startGame() {
-        let scene = CCBReader.loadAsScene("MainScene")
-        var transition = CCTransition(fadeWithDuration: 0.25)
-        CCDirector.sharedDirector().replaceScene(scene, withTransition: transition)
+    override func onEnterTransitionDidFinish() {
+        menuNode.animationManager.runAnimationsForSequenceNamed("showMenu")
     }
     
 }
