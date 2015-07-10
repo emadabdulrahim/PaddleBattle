@@ -100,7 +100,6 @@
 		F5D743B81B4621DA00090F81 /* PlayerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D743B71B4621DA00090F81 /* PlayerContainer.swift */; };
 		F5F9B3C31B4480FD003F481B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B3C21B4480FD003F481B /* Player.swift */; };
 		F5F9B3C51B449277003F481B /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B3C41B449277003F481B /* Ball.swift */; };
-		F5F9B3C71B44ACBB003F481B /* Paddle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B3C61B44ACBB003F481B /* Paddle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,7 +225,6 @@
 		F5D743B71B4621DA00090F81 /* PlayerContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerContainer.swift; sourceTree = "<group>"; };
 		F5F9B3C21B4480FD003F481B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		F5F9B3C41B449277003F481B /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
-		F5F9B3C61B44ACBB003F481B /* Paddle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paddle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,11 +453,10 @@
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
 				F5D743B71B4621DA00090F81 /* PlayerContainer.swift */,
 				F587703F1B4DEAD300B0FDF3 /* Menu.swift */,
-				F5F9B3C21B4480FD003F481B /* Player.swift */,
 				F587703C1B4C8D6800B0FDF3 /* Score.swift */,
-				F5D743A01B45D1D800090F81 /* Goal.swift */,
 				F5F9B3C41B449277003F481B /* Ball.swift */,
-				F5F9B3C61B44ACBB003F481B /* Paddle.swift */,
+				F5D743A01B45D1D800090F81 /* Goal.swift */,
+				F5F9B3C21B4480FD003F481B /* Player.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
 			name = Source;
@@ -843,7 +840,6 @@
 				F5F9B3C51B449277003F481B /* Ball.swift in Sources */,
 				F587703D1B4C8D6800B0FDF3 /* Score.swift in Sources */,
 				F58770401B4DEAD300B0FDF3 /* Menu.swift in Sources */,
-				F5F9B3C71B44ACBB003F481B /* Paddle.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 				F58770391B4B3E2900B0FDF3 /* StartScene.swift in Sources */,

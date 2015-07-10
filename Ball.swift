@@ -10,7 +10,4 @@ import Foundation
 
 class Ball: CCSprite {
 
-    func didLoadFromCCB() {
-        
-    }
 }

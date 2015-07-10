@@ -50,9 +50,9 @@
 		<key>physicsBody</key>
 		<dict>
 			<key>affectedByGravity</key>
-			<true/>
+			<false/>
 			<key>allowsRotation</key>
-			<true/>
+			<false/>
 			<key>bodyShape</key>
 			<integer>1</integer>
 			<key>collisionCategories</key>
@@ -62,7 +62,7 @@
 			<key>collisionType</key>
 			<string>ball</string>
 			<key>cornerRadius</key>
-			<real>7.3665308952331543</real>
+			<real>7.4019055366516113</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -70,7 +70,7 @@
 			<key>elasticity</key>
 			<real>1</real>
 			<key>friction</key>
-			<real>0.10000000149011612</real>
+			<real>0.0</real>
 			<key>points</key>
 			<array>
 				<array>
