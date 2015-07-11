@@ -20,7 +20,7 @@ import Foundation
 class PlayerContainer : CCNode {
     
     weak var player : Player!
-    weak var goal : Goal!
+    weak var goal : CCNode!
     weak var circle : CCSprite!
     var scoreManager : Score!
     let maxRotation : Float = 45.0
@@ -47,28 +47,58 @@ class PlayerContainer : CCNode {
         userInteractionEnabled = true
         multipleTouchEnabled = true
         
-        let spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-\(player.name).png")
-        player.paddle.spriteFrame = spriteFrame
-        
-        if player.name == "pink" {
+        goal.physicsBody.sensor = true
+    }
+    
+    func setupPlayer() {
+        if name == "player1" {
             playerPosition = .Left
             player.paddle.rotation = 90
+            circle.name = "blue"
+            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-blue.png")
+            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-blue.png")
+            goal.rotation = 90
+            goal.position = CGPoint(x: 195, y: 150)
+
         }
-        if player.name == "red" {
+        
+        if name == "player2" {
             playerPosition = .Right
             player.paddle.rotation = -90
+            circle.name = "red"
+            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-red.png")
+            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-red.png")
+            goal.rotation = 90
+            goal.position = CGPoint(x: 115, y: 150)
         }
-        if player.name == "green" {
+        if name == "player3" {
+            playerPosition = .Bottom
+            player.paddle.rotation = 0
+            circle.name = "pink"
+            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-pink.png")
+            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-pink.png")
+            goal.position = CGPoint(x: 150, y: 195)
+        }
+        
+        if name == "player4" {
             playerPosition = .Top
             player.paddle.rotation = 180
+            circle.name = "green"
+            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-green.png")
+            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-green.png")
+            goal.position = CGPoint(x: 150, y: 115)
         }
         
+        setupPlayerScore()
+    }
+    
+    func setupPlayerScore() {
         scoreManager = CCBReader.load("Score") as! Score
         scoreManager.setupScoreForPlayer(playerPosition, numberOfPoints: score)
-        
     }
     
     func eliminatePlayer() {
+//        score = 0
         didLose = true
         deadPlayerCounter++
         stopAllActions()
@@ -80,18 +110,18 @@ class PlayerContainer : CCNode {
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        if gameStatus == .Starting {
-            if !didLose {
-                player.stopAllActions()
-                player.runAction(CCActionSequence(array: [CCActionRotateBy(duration: 1.00, angle: 180), CCActionCallBlock(block: { () -> Void in
-                })]))
-                didLose = true
-            } else {
-                player.stopAllActions()
-                player.runAction(CCActionRotateTo(duration: 0.25, angle: 0))
-                didLose = false
-            }
-        }
+//        if gameStatus == .Starting {
+//            if !didLose {
+//                player.stopAllActions()
+//                player.runAction(CCActionSequence(array: [CCActionRotateBy(duration: 1.00, angle: 180), CCActionCallBlock(block: { () -> Void in
+//                })]))
+//                didLose = true
+//            } else {
+//                player.stopAllActions()
+//                player.runAction(CCActionRotateTo(duration: 0.25, angle: 0))
+//                didLose = false
+//            }
+//        }
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
