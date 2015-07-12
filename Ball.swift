@@ -48,11 +48,7 @@ class Ball: CCSprite {
         case .TopRight:
             physicsBody.applyImpulse(CGPoint(x: -velocityX * speed, y: -velocityY * speed))
         }
-        gameScene?.balls.append(self)
-        addTrail()
-        
-        //        let zoomAction = CCActionSpawn(array: [CCActionMoveTo(duration: 0.5, position: ball.position), CCActionScaleBy(duration: 0.5, scale: 1.3)])
-        //        self.runAction(zoomAction)
+        gameScene?.balls.append(self)        
     }
     
     func spawnBallAtLocation(corner: UInt32) {
@@ -115,7 +111,7 @@ class Ball: CCSprite {
                             unstuckBall()
                             
                             if let trail = getChildByName("trail", recursively: false) as? CCParticleSystem {
-                                trail.startSize = Float(ccpLength(physicsBody.velocity)*0.03)
+                                trail.startSize = Float(ccpLength(physicsBody.velocity)*0.025)
                             }
                             
                         } else {

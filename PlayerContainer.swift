@@ -93,12 +93,14 @@ class PlayerContainer : CCNode {
     }
     
     func setupPlayerScore() {
+        if score == 0 {
+            return
+        }
         scoreManager = CCBReader.load("Score") as! Score
         scoreManager.setupScoreForPlayer(playerPosition, numberOfPoints: score)
     }
     
     func eliminatePlayer() {
-//        score = 0
         didLose = true
         deadPlayerCounter++
         stopAllActions()

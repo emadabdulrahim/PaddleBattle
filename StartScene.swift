@@ -47,8 +47,8 @@ class StartScene: CCScene, MenuDelegate {
         
     }
     
-    override func onEnterTransitionDidFinish() {
-        menuNode.animationManager.runAnimationsForSequenceNamed("showMenu")
+    func unpauseGame() {
+        
     }
     
 }
