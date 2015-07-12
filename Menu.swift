@@ -32,8 +32,10 @@ class Menu: CCNode {
     
     func startGame() {
         let scene = CCBReader.loadAsScene("MainScene")
-        var transition = CCTransition(fadeWithDuration: 0.25)
-        CCDirector.sharedDirector().replaceScene(scene, withTransition: transition)
+        self.animationManager.runAnimationsForSequenceNamed("closeMenu")
+        CCDirector.sharedDirector().replaceScene(scene)
+//        runAction(CCActionSequence(array: [CCActionDelay(duration: 0.48) , CCActionCallBlock(block: { () -> Void in
+//        })]))
     }
     
     func continueTapped() {
@@ -47,27 +49,26 @@ class Menu: CCNode {
     func twoPlayersTapped() {
         delegate?.twoPlayers()
         GameSettings.activePlayers = 2
-        twoPlayers.highlighted = true
         startGameButton.title = "Start 2 Players Game"
-//        threePlayers.state = CCControlState.
-        fourPlayers.highlighted = false
+        threePlayers.selected = false
+        fourPlayers.selected = false
     }
     
     func threePlayersTapped() {
         delegate?.threePlayers()
         GameSettings.activePlayers = 3
-        threePlayers.highlighted = true
         startGameButton.title = "Start 3 Players Game"
-        twoPlayers.highlighted = false
-        fourPlayers.highlighted = false
+        twoPlayers.selected = false
+        fourPlayers.selected = false
+
     }
 
     func fourPlayersTapped() {
         delegate?.fourPlayers()
         GameSettings.activePlayers = 4
         startGameButton.title = "Start 4 Players Game"
-        twoPlayers.highlighted = false
-        threePlayers.highlighted = false
+        twoPlayers.selected = false
+        threePlayers.selected = false
     }
 
 }

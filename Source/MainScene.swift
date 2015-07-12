@@ -50,7 +50,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     
     func didLoadFromCCB() {
-        //        CCDirector.sharedDirector().displayStats = true
+        CCDirector.sharedDirector().displayStats = true
         //        gamePhysicsNode.debugDraw = true
         userInteractionEnabled = true
         multipleTouchEnabled = true
@@ -164,7 +164,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
             self.setupSpawnParticle(ball.position)
         }), CCActionDelay(duration: 0.5), CCActionCallBlock(block: { () -> Void in
             ball.addBallAndApplyImpulse(self.speed)
-            if self.lightNode?.depth > 60 {
+            if self.lightNode == nil {
+                ball.addTrail()
+            } else if self.lightNode?.depth > 65 {
                 ball.addTrail()
             }
         })]))
@@ -198,7 +200,6 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     func unpauseGame() {
         menuLayer.animationManager.runAnimationsForSequenceNamed("closeMenu")
-        //        menuLayer.continueButton.visible = false
         gameStatus = .Running
         paused = false
     }
@@ -261,12 +262,11 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
             }
             difficultyTimer.invalidate()
             ballTimeManager.invalidate()
-            restartButton.visible = true
         }
         
         if elapsedGameTime > 5 {
-            if lightNode?.depth > 40 {
-                lightNode?.depth = lightNode!.depth - Float(50*delta)
+            if lightNode?.depth > 50{
+                lightNode?.depth = lightNode!.depth - Float(10*delta)
             }
         }
     }

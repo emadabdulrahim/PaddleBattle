@@ -14,6 +14,6 @@ struct GameSettings {
     
     static var hardMode = false
     static var numberOfPlayers  = 4
-    static var activePlayers = 2
+    static var activePlayers = 4
     static var teamPlay = false
 }

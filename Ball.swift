@@ -48,7 +48,8 @@ class Ball: CCSprite {
         case .TopRight:
             physicsBody.applyImpulse(CGPoint(x: -velocityX * speed, y: -velocityY * speed))
         }
-        gameScene?.balls.append(self)        
+        gameScene?.balls.append(self)
+        SoundManager.playRollingLoop()
     }
     
     func spawnBallAtLocation(corner: UInt32) {
@@ -106,7 +107,6 @@ class Ball: CCSprite {
                 for child in gameScene.gamePhysicsNode.children {
                     if let ball = child as? Ball {
                         if CGRectContainsPoint(gameScene.playBox.boundingBox(), position) {
-                            
                             limitBallSpeed()
                             unstuckBall()
                             
