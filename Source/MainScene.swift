@@ -1,14 +1,6 @@
 import Foundation
 import UIKit
 
-var deadPlayerCounter = 0
-
-enum GameStatus {
-    case Starting
-    case Running
-    case Paused
-    case Ended
-}
 
 var gameStatus : GameStatus = .Starting
 
@@ -50,7 +42,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     
     func didLoadFromCCB() {
-        CCDirector.sharedDirector().displayStats = true
+//        CCDirector.sharedDirector().displayStats = true
         //        gamePhysicsNode.debugDraw = true
         userInteractionEnabled = true
         multipleTouchEnabled = true
@@ -72,17 +64,6 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         //        self.runAction(actionScale)
     }
     
-    //    func setupLightNode() {
-    //        var lightGroup = ["lightGroup1"]
-    //        var addEffect = CCEffectLighting(groups: lightGroup, specularColor: CCColor.whiteColor(), shininess: 0)
-    //
-    //        lightNode = CCLightNode(type: CCLightType.Point, groups: [lightGroup], color: CCColor.whiteColor(), intensity: 1, specularColor: CCColor.clearColor(), specularIntensity: 0, ambientColor: CCColor.whiteColor(), ambientIntensity: 0)
-    //        lightNode?.depth = 400
-    //        lightNode?.position = centerNode.position
-    //        addChild(lightNode)
-    //    }
-    
-    //    add players to the MainScene
     func setupPlayers() {
         println("Number Of Players \(GameSettings.numberOfPlayers)")
         for i in 0..<4 {
@@ -132,14 +113,13 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     override func onEnterTransitionDidFinish() {
         labelTimeManager = schedule("setupCountDownLabel", interval: 1, repeat: UInt(timeToStart), delay: 0)
-        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: CCTime(timeToStart))
-        difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*2)
+        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 0)
+        difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*3)
     }
     
     func increaseDiffculty() {
         speed *= 1.5
         intervalTime *= 0.6
-        
         ballTimeManager.invalidate()
         ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 5)
     }
@@ -166,7 +146,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
             ball.addBallAndApplyImpulse(self.speed)
             if self.lightNode == nil {
                 ball.addTrail()
-            } else if self.lightNode?.depth > 65 {
+            } else if self.lightNode?.depth > 55 {
                 ball.addTrail()
             }
         })]))
@@ -192,6 +172,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     }
     
     func showPopupLayer() {
+        if menuLayer.visible == true {
+            return
+        }
         menuLayer.animationManager.runAnimationsForSequenceNamed("openMenu")
         menuLayer.zOrder = 200
         menuLayer.visible = true
@@ -237,16 +220,27 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     //    displayer the winner label
     func displayWonLabel(paddleColor: String) {
-        playerWonLabel.string = "\(paddleColor) Player Won!"
+        playerWonLabel.string = "\(paddleColor) player won!"
+        playerWonLabel.zOrder = 350
         playerWonLabel.visible = true
-        playerWonLabel.runAction(CCActionBlink(duration: 1))
+        playerWonLabel.animationManager.runAnimationsForSequenceNamed("wonLabel")
+        playerWonLabel.runAction(CCActionSequence(array: [CCActionDelay(duration: 0.5), CCActionCallBlock(block: { () -> Void in
+            self.loadFireworks()
+        })]))
+    }
+    
+    func loadFireworks() {
+        var fireworks = CCBReader.load("Fireworks") as! CCParticleSystem
+        fireworks.position = CGPoint(x: playerWonLabel.position.x + 100, y: playerWonLabel.position.y)
+        playerWonLabel.addChild(fireworks)
+        fireworks.zOrder = -1
     }
     
     
     //    play again button pressed
     func playAgain() {
         let scene = CCBReader.loadAsScene("MainScene")
-        var transition = CCTransition(fadeWithDuration: 0.5)
+        var transition = CCTransition(fadeWithDuration: 0.4)
         CCDirector.sharedDirector().replaceScene(scene, withTransition: transition)
     }
     
@@ -254,18 +248,20 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         elapsedGameTime += delta
         //        find the winner play and call displayWonLabel method with player color
         if deadPlayerCounter == 3 {
-            gameStatus = .Ended
-            for playerContainer in players {
-                if playerContainer.didLose == false {
-                    displayWonLabel(playerContainer.circle.name)
+            if gameStatus != .Ended {
+                for playerContainer in players {
+                    if playerContainer.didLose == false {
+                        gameStatus = .Ended
+                        displayWonLabel(playerContainer.circle.name)
+                    }
                 }
+                difficultyTimer.invalidate()
+                ballTimeManager.invalidate()
             }
-            difficultyTimer.invalidate()
-            ballTimeManager.invalidate()
         }
         
-        if elapsedGameTime > 5 {
-            if lightNode?.depth > 50{
+        if elapsedGameTime > 10 {
+            if lightNode?.depth > 40{
                 lightNode?.depth = lightNode!.depth - Float(10*delta)
             }
         }
@@ -273,8 +269,17 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     
     
-    
-    
+    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+        if gameStatus == .Ended {
+//            playerWonLabel.removeAllChildrenWithCleanup(true)
+            for child in children {
+                if let wonLabel = child as? CCLabelTTF {
+                    wonLabel.removeFromParentAndCleanup(true)
+                    showPopupLayer()
+                }
+            }
+        }
+    }
     
     
     

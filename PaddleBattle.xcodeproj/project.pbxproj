@@ -93,6 +93,9 @@
 		BC5399DA1A44DCC90063F482 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D51A44DCC90063F482 /* GLActivityKit.framework */; };
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
+		F545A8FE1B583CD500A1B567 /* rolling-ball.aif in Resources */ = {isa = PBXBuildFile; fileRef = F545A8FD1B583CD500A1B567 /* rolling-ball.aif */; };
+		F545A9001B583D7000A1B567 /* rolling-ball-loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F545A8FF1B583D7000A1B567 /* rolling-ball-loop.mp3 */; };
+		F545A9021B583D7600A1B567 /* rolling-ball-loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = F545A9011B583D7600A1B567 /* rolling-ball-loop.wav */; };
 		F58770391B4B3E2900B0FDF3 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58770381B4B3E2900B0FDF3 /* StartScene.swift */; };
 		F587703D1B4C8D6800B0FDF3 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = F587703C1B4C8D6800B0FDF3 /* Score.swift */; };
 		F58770401B4DEAD300B0FDF3 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F587703F1B4DEAD300B0FDF3 /* Menu.swift */; };
@@ -220,6 +223,9 @@
 		BC5399D61A44DCC90063F482 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
+		F545A8FD1B583CD500A1B567 /* rolling-ball.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "rolling-ball.aif"; sourceTree = "<group>"; };
+		F545A8FF1B583D7000A1B567 /* rolling-ball-loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "rolling-ball-loop.mp3"; sourceTree = "<group>"; };
+		F545A9011B583D7600A1B567 /* rolling-ball-loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "rolling-ball-loop.wav"; sourceTree = "<group>"; };
 		F58770381B4B3E2900B0FDF3 /* StartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 		F587703C1B4C8D6800B0FDF3 /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		F587703F1B4DEAD300B0FDF3 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -566,6 +572,9 @@
 		F5CCA5071B52C15A007D16C3 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				F545A9011B583D7600A1B567 /* rolling-ball-loop.wav */,
+				F545A8FF1B583D7000A1B567 /* rolling-ball-loop.mp3 */,
+				F545A8FD1B583CD500A1B567 /* rolling-ball.aif */,
 				F5CCA5051B52C157007D16C3 /* metal on wood rolling loop.wav */,
 			);
 			name = Sounds;
@@ -765,6 +774,8 @@
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
 				B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */,
+				F545A9001B583D7000A1B567 /* rolling-ball-loop.mp3 in Resources */,
+				F545A9021B583D7600A1B567 /* rolling-ball-loop.wav in Resources */,
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
@@ -774,6 +785,7 @@
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
+				F545A8FE1B583CD500A1B567 /* rolling-ball.aif in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
 				F5CCA5061B52C157007D16C3 /* metal on wood rolling loop.wav in Resources */,
 			);

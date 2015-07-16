@@ -23,17 +23,24 @@ class Menu: CCNode {
     weak var startGameButton : CCButton!
     weak var continueButton : CCButton!
     weak var menuContainer : CCNode!
+    weak var menuBody : CCSprite!
     var delegate : MenuDelegate?
     
     
     func didLoadFromCCB() {
 //        fourPlayers.highlighted = true
+        addDropShadow()
+    }
+    
+    func addDropShadow() {
+        var shadow = CCEffectDropShadow(shadowOffset: GLKVector2Make(3, -5), shadowColor: CCColor.whiteColor(), blurRadius: 0)
+        menuBody.effect = shadow
     }
     
     func startGame() {
         let scene = CCBReader.loadAsScene("MainScene")
         self.animationManager.runAnimationsForSequenceNamed("closeMenu")
-        CCDirector.sharedDirector().replaceScene(scene)
+        CCDirector.sharedDirector().replaceScene(scene, withTransition: CCTransition(fadeWithDuration: 0.25))
 //        runAction(CCActionSequence(array: [CCActionDelay(duration: 0.48) , CCActionCallBlock(block: { () -> Void in
 //        })]))
     }

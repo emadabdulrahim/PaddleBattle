@@ -13,6 +13,6 @@ struct SoundManager {
     static var audio = OALSimpleAudio.sharedInstance()
     
     static func playRollingLoop() {
-        audio.playEffect("metal on wood rolling loop.wav", loop: true)
+        audio.playEffect("rolling-ball-loop.wav", volume: 1.0, pitch: 1, pan: 0, loop: false)
     }
 }

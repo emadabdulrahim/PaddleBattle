@@ -16,6 +16,7 @@ class StartScene: CCScene, MenuDelegate {
     weak var placeHolder4 : CCNode!
     var placeHolders = [CCNode]()
     var menuNode : Menu!
+    var players = [PlayerContainer]()
 
     func didLoadFromCCB() {
         placeHolders = [placeHolder1, placeHolder2, placeHolder3, placeHolder4]
@@ -31,21 +32,38 @@ class StartScene: CCScene, MenuDelegate {
             playerContainer.name = "player\(i+1)"
             playerContainer.setupPlayer()
             addChild(playerContainer)
+            players.append(playerContainer)
         }
     }
     
     
     func twoPlayers() {
-        
+        disablePlayer("player3")
+        disablePlayer("player4")
     }
     
     func threePlayers() {
-        
+        enablePlayer("player4")
+        disablePlayer("player3")
     }
     
     func fourPlayers() {
-        
+        enablePlayer("player4")
+        enablePlayer("player3")
     }
+    
+    func disablePlayer(name: String) {
+        var playerX = getChildByName(name , recursively: false) as! PlayerContainer
+        playerX.circle.opacity = 0.5
+        playerX.player.paddle.opacity = 0.3
+    }
+    
+    func enablePlayer(name: String) {
+        var playerX = getChildByName(name , recursively: false) as! PlayerContainer
+        playerX.circle.opacity = 1
+        playerX.player.paddle.opacity = 1
+    }
+
     
     func unpauseGame() {
         

@@ -8,12 +8,20 @@
 
 import Foundation
 
-let startGameKey = "com.PaddleBattle.StartGame"
+enum GameStatus {
+    case Starting
+    case Running
+    case Paused
+    case Ended
+}
+
+var deadPlayerCounter = 0
+
 
 struct GameSettings {
     
     static var hardMode = false
     static var numberOfPlayers  = 4
     static var activePlayers = 4
-    static var teamPlay = false
+//    static var teamPlay = false
 }

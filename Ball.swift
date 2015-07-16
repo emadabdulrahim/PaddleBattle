@@ -111,7 +111,7 @@ class Ball: CCSprite {
                             unstuckBall()
                             
                             if let trail = getChildByName("trail", recursively: false) as? CCParticleSystem {
-                                trail.startSize = Float(ccpLength(physicsBody.velocity)*0.025)
+                                trail.startSize = Float(ccpLength(physicsBody.velocity)*0.03)
                             }
                             
                         } else {
@@ -122,7 +122,7 @@ class Ball: CCSprite {
                             
                     //        always keep a ball in the play field
                             if gameScene.balls.count == 0 && gameStatus == .Running {
-                                gameScene.runAction(CCActionSequence(array: [CCActionDelay(duration: 0.3), CCActionCallBlock(block: { () -> Void in
+                                gameScene.runAction(CCActionSequence(array: [CCActionDelay(duration: 0.25), CCActionCallBlock(block: { () -> Void in
                                     gameScene.createNewBall()
                                 })]))
                             }

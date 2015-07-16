@@ -36,13 +36,13 @@ class Score: CCNode {
     func setupScoreForPlayer(playerPosition: PlayerPosition, numberOfPoints: Int) {
         switch playerPosition {
         case .Top:
-            setupScoreImageColor("red")
+            setupScoreImageColor("green")
             rotation = 315
         case .Bottom:
-            setupScoreImageColor("red")
+            setupScoreImageColor("pink")
             rotation = 135
         case .Left:
-            setupScoreImageColor("red")
+            setupScoreImageColor("blue")
             rotation = 225
         case .Right:
             setupScoreImageColor("red")

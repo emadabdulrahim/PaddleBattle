@@ -29,7 +29,7 @@ class PlayerContainer : CCNode {
     var didLose = false
 
 
-    var score : Int = 5 {
+    var score : Int = 1 {
         didSet {
             // update label
             // label.string = score
@@ -112,18 +112,7 @@ class PlayerContainer : CCNode {
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-//        if gameStatus == .Starting {
-//            if !didLose {
-//                player.stopAllActions()
-//                player.runAction(CCActionSequence(array: [CCActionRotateBy(duration: 1.00, angle: 180), CCActionCallBlock(block: { () -> Void in
-//                })]))
-//                didLose = true
-//            } else {
-//                player.stopAllActions()
-//                player.runAction(CCActionRotateTo(duration: 0.25, angle: 0))
-//                didLose = false
-//            }
-//        }
+
     }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
