@@ -28,7 +28,6 @@ class Menu: CCNode {
     
     
     func didLoadFromCCB() {
-//        fourPlayers.highlighted = true
         addDropShadow()
     }
     

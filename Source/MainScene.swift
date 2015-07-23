@@ -113,7 +113,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     override func onEnterTransitionDidFinish() {
         labelTimeManager = schedule("setupCountDownLabel", interval: 1, repeat: UInt(timeToStart), delay: 0)
-        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 0)
+        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 3)
         difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*3)
     }
     
@@ -174,6 +174,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     func showPopupLayer() {
         if menuLayer.visible == true {
             return
+        }
+        if gameStatus == .Ended {
+            menuLayer.continueButton.visible = false
         }
         menuLayer.animationManager.runAnimationsForSequenceNamed("openMenu")
         menuLayer.zOrder = 200
@@ -281,6 +284,9 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         }
     }
     
+    
+    
+
     
     
     
