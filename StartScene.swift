@@ -55,7 +55,7 @@ class StartScene: CCScene, MenuDelegate {
     func disablePlayer(name: String) {
         var playerX = getChildByName(name , recursively: false) as! PlayerContainer
         playerX.circle.opacity = 0.5
-        playerX.player.paddle.opacity = 0.3
+        playerX.player.paddle.opacity = 0.0
     }
     
     func enablePlayer(name: String) {

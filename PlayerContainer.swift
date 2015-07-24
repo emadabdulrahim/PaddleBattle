@@ -29,7 +29,7 @@ class PlayerContainer : CCNode {
     var didLose = false
 
 
-    var score : Int = 5 {
+    var score : Int = 1 {
         didSet {
             // update label
             // label.string = score

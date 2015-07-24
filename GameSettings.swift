@@ -20,6 +20,9 @@ var deadPlayerCounter = 0
 
 struct GameSettings {
     
+    static let spawnSound = "Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3"
+    static let paddleHitSound = "FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3"
+    static let hitSound = "FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3"
     static var hardMode = false
     static var numberOfPlayers  = 4
     static var activePlayers = 4

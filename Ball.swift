@@ -49,7 +49,7 @@ class Ball: CCSprite {
             physicsBody.applyImpulse(CGPoint(x: -velocityX * speed, y: -velocityY * speed))
         }
         gameScene?.balls.append(self)
-        SoundManager.playRollingLoop()
+        GameSound.sharedInstance.playSound(GameSettings.spawnSound, volume: 1.0)
     }
     
     func spawnBallAtLocation(corner: UInt32) {
@@ -78,7 +78,7 @@ class Ball: CCSprite {
     
     func limitBallSpeed() {
         //       Clamp the speed of the ball manually between Min and Max Speed values
-        println("Ball speed \(ccpLength(physicsBody.velocity))")
+//        println("Ball speed \(ccpLength(physicsBody.velocity))")
         if ccpLength(physicsBody.velocity) > maxSpeed {
             println("TOO FAST")
             physicsBody.velocity = ccpMult(physicsBody.velocity, 0.8)

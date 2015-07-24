@@ -93,15 +93,14 @@
 		BC5399DA1A44DCC90063F482 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D51A44DCC90063F482 /* GLActivityKit.framework */; };
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
-		F545A8FE1B583CD500A1B567 /* rolling-ball.aif in Resources */ = {isa = PBXBuildFile; fileRef = F545A8FD1B583CD500A1B567 /* rolling-ball.aif */; };
-		F545A9001B583D7000A1B567 /* rolling-ball-loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F545A8FF1B583D7000A1B567 /* rolling-ball-loop.mp3 */; };
-		F545A9021B583D7600A1B567 /* rolling-ball-loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = F545A9011B583D7600A1B567 /* rolling-ball-loop.wav */; };
 		F58770391B4B3E2900B0FDF3 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58770381B4B3E2900B0FDF3 /* StartScene.swift */; };
 		F587703D1B4C8D6800B0FDF3 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = F587703C1B4C8D6800B0FDF3 /* Score.swift */; };
 		F58770401B4DEAD300B0FDF3 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F587703F1B4DEAD300B0FDF3 /* Menu.swift */; };
 		F58770421B5060EF00B0FDF3 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58770411B5060EF00B0FDF3 /* GameSettings.swift */; };
-		F5CCA5061B52C157007D16C3 /* metal on wood rolling loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = F5CCA5051B52C157007D16C3 /* metal on wood rolling loop.wav */; };
-		F5CCA5091B52C229007D16C3 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CCA5081B52C229007D16C3 /* SoundManager.swift */; };
+		F58953721B61D3DA0005D96C /* GameSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58953711B61D3DA0005D96C /* GameSound.swift */; };
+		F58953761B61DFB20005D96C /* FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F58953751B61DFB20005D96C /* FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3 */; };
+		F58953781B61DFB90005D96C /* Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F58953771B61DFB90005D96C /* Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3 */; };
+		F589537A1B61E95F0005D96C /* FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F58953791B61E95F0005D96C /* FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3 */; };
 		F5D743B81B4621DA00090F81 /* PlayerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D743B71B4621DA00090F81 /* PlayerContainer.swift */; };
 		F5F9B3C31B4480FD003F481B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B3C21B4480FD003F481B /* Player.swift */; };
 		F5F9B3C51B449277003F481B /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B3C41B449277003F481B /* Ball.swift */; };
@@ -223,15 +222,14 @@
 		BC5399D61A44DCC90063F482 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
-		F545A8FD1B583CD500A1B567 /* rolling-ball.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "rolling-ball.aif"; sourceTree = "<group>"; };
-		F545A8FF1B583D7000A1B567 /* rolling-ball-loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "rolling-ball-loop.mp3"; sourceTree = "<group>"; };
-		F545A9011B583D7600A1B567 /* rolling-ball-loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "rolling-ball-loop.wav"; sourceTree = "<group>"; };
 		F58770381B4B3E2900B0FDF3 /* StartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 		F587703C1B4C8D6800B0FDF3 /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		F587703F1B4DEAD300B0FDF3 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		F58770411B5060EF00B0FDF3 /* GameSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
-		F5CCA5051B52C157007D16C3 /* metal on wood rolling loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "metal on wood rolling loop.wav"; sourceTree = "<group>"; };
-		F5CCA5081B52C229007D16C3 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		F58953711B61D3DA0005D96C /* GameSound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSound.swift; sourceTree = "<group>"; };
+		F58953751B61DFB20005D96C /* FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3"; sourceTree = "<group>"; };
+		F58953771B61DFB90005D96C /* Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3"; sourceTree = "<group>"; };
+		F58953791B61E95F0005D96C /* FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3"; sourceTree = "<group>"; };
 		F5D743B71B4621DA00090F81 /* PlayerContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerContainer.swift; sourceTree = "<group>"; };
 		F5F9B3C21B4480FD003F481B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		F5F9B3C41B449277003F481B /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
@@ -462,7 +460,7 @@
 				F58770381B4B3E2900B0FDF3 /* StartScene.swift */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
 				F5D743B71B4621DA00090F81 /* PlayerContainer.swift */,
-				F5CCA5081B52C229007D16C3 /* SoundManager.swift */,
+				F58953711B61D3DA0005D96C /* GameSound.swift */,
 				F587703F1B4DEAD300B0FDF3 /* Menu.swift */,
 				F587703C1B4C8D6800B0FDF3 /* Score.swift */,
 				F5F9B3C41B449277003F481B /* Ball.swift */,
@@ -572,10 +570,9 @@
 		F5CCA5071B52C15A007D16C3 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				F545A9011B583D7600A1B567 /* rolling-ball-loop.wav */,
-				F545A8FF1B583D7000A1B567 /* rolling-ball-loop.mp3 */,
-				F545A8FD1B583CD500A1B567 /* rolling-ball.aif */,
-				F5CCA5051B52C157007D16C3 /* metal on wood rolling loop.wav */,
+				F58953791B61E95F0005D96C /* FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3 */,
+				F58953771B61DFB90005D96C /* Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3 */,
+				F58953751B61DFB20005D96C /* FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -771,13 +768,14 @@
 			files = (
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
+				F58953781B61DFB90005D96C /* Sound design magical accent wand pixie dust science fiction 01_SFXBible_ss02338.mp3 in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
+				F58953761B61DFB20005D96C /* FOLEY RUBBER BALL BOUNCE HARD SINGLE 01.mp3 in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
 				B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */,
-				F545A9001B583D7000A1B567 /* rolling-ball-loop.mp3 in Resources */,
-				F545A9021B583D7600A1B567 /* rolling-ball-loop.wav in Resources */,
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
+				F589537A1B61E95F0005D96C /* FOLEY RUBBER BALL BOUNCE SINGLE 01.mp3 in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,
@@ -785,9 +783,7 @@
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
-				F545A8FE1B583CD500A1B567 /* rolling-ball.aif in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
-				F5CCA5061B52C157007D16C3 /* metal on wood rolling loop.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,7 +866,7 @@
 				F58770401B4DEAD300B0FDF3 /* Menu.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
-				F5CCA5091B52C229007D16C3 /* SoundManager.swift in Sources */,
+				F58953721B61D3DA0005D96C /* GameSound.swift in Sources */,
 				F58770391B4B3E2900B0FDF3 /* StartScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

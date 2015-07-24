@@ -153,17 +153,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         
     }
     
-    //    Ball colliding with Goal Node, decrease player score
-    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, goal nodeA: CCNode!, ball nodeB: Ball!) -> ObjCBool {
-        println("Collision Happened")
-        if gameStatus == .Ended {
-            return false
-        }
-        if let playerContainer = nodeA.parent as? PlayerContainer {
-            playerContainer.score--
-        }
-        return true
-    }
+    
     
     func pauseGame() {
         paused = true
@@ -175,19 +165,36 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         if menuLayer.visible == true {
             return
         }
+        menuLayer.continueButton.visible = true
         if gameStatus == .Ended {
             menuLayer.continueButton.visible = false
         }
         menuLayer.animationManager.runAnimationsForSequenceNamed("openMenu")
         menuLayer.zOrder = 200
         menuLayer.visible = true
-        menuLayer.continueButton.visible = true
     }
     
     func unpauseGame() {
         menuLayer.animationManager.runAnimationsForSequenceNamed("closeMenu")
         gameStatus = .Running
         paused = false
+    }
+    
+    //    Ball colliding with Goal Node, decrease player score
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, goal nodeA: CCNode!, ball nodeB: Ball!) -> ObjCBool {
+        println("Collision Happened")
+        let goalNode = nodeA
+        if gameStatus == .Ended {
+            return false
+        }
+        if let playerContainer = nodeA.parent as? PlayerContainer {
+            playerContainer.score--
+        }
+        
+        if goalNode.physicsBody.sensor == false {
+            GameSound.sharedInstance.playSound(GameSettings.hitSound, volume: 1.0)
+        }
+        return true
     }
     
     //    shake paddle when ball hits it hard
@@ -198,14 +205,16 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         println("PADDLE energy \(CGFloat(energy))")
         let player = nodeA.parent
         if let paddle = nodeA.parent as? CCSprite {
-            if energy > 500 {
+            if energy > 400 {
                 gamePhysicsNode.space.addPostStepBlock({ () -> Void in
                     paddle.animationManager.runAnimationsForSequenceNamed("paddleHardHit")
                     }, key: paddle)
+                GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 1.0)
             } else {
                 gamePhysicsNode.space.addPostStepBlock({ () -> Void in
                     paddle.animationManager.runAnimationsForSequenceNamed("paddleSoftHit")
                     }, key: paddle)
+                GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 0.6)
             }
         }
     }
@@ -213,11 +222,12 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     //    add spark particle when ball bounce on edges
     func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, edge nodeA: CCPhysicsNode!, ball nodeB: Ball!) {
         let energy = pair.totalKineticEnergy
-        //        println("energy \(CGFloat(energy))")
+                println("energy \(CGFloat(energy))")
         let spark = CCBReader.load("Spark") as! CCParticleSystem
         spark.position = nodeB.position
         spark.particlePositionType = CCParticleSystemPositionType.Free
         addChild(spark)
+        GameSound.sharedInstance.playSound(GameSettings.hitSound, volume: 1.0)
     }
     
     
@@ -287,10 +297,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     
 
-    
-    
-    
-    
+
     
     
     func twoPlayers() {
