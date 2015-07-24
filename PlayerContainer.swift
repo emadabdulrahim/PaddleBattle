@@ -29,7 +29,7 @@ class PlayerContainer : CCNode {
     var didLose = false
 
 
-    var score : Int = 1 {
+    var score : Int = 5 {
         didSet {
             // update label
             // label.string = score
@@ -55,6 +55,7 @@ class PlayerContainer : CCNode {
             playerPosition = .Left
             player.paddle.rotation = 90
             circle.name = "blue"
+            player.name = "blue"
             circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-blue.png")
             player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-blue.png")
             goal.rotation = 90
@@ -66,6 +67,7 @@ class PlayerContainer : CCNode {
             playerPosition = .Right
             player.paddle.rotation = -90
             circle.name = "red"
+            player.name = "red"
             circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-red.png")
             player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-red.png")
             goal.rotation = 90
@@ -75,6 +77,7 @@ class PlayerContainer : CCNode {
             playerPosition = .Bottom
             player.paddle.rotation = 0
             circle.name = "pink"
+            player.name = "pink"
             circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-pink.png")
             player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-pink.png")
             goal.position = CGPoint(x: 150, y: 195)
@@ -84,6 +87,7 @@ class PlayerContainer : CCNode {
             playerPosition = .Top
             player.paddle.rotation = 180
             circle.name = "green"
+            player.name = "green"
             circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-green.png")
             player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-green.png")
             goal.position = CGPoint(x: 150, y: 115)

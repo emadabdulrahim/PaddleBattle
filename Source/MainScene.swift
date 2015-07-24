@@ -42,7 +42,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     
     func didLoadFromCCB() {
-//        CCDirector.sharedDirector().displayStats = true
+        //        CCDirector.sharedDirector().displayStats = true
         //        gamePhysicsNode.debugDraw = true
         userInteractionEnabled = true
         multipleTouchEnabled = true
@@ -199,30 +199,44 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     //    shake paddle when ball hits it hard
     func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, paddle nodeA: CCSprite!, ball nodeB: Ball!) {
-        println("Paddle Hit")
         let energy = pair.totalKineticEnergy
         let ball = nodeB
+        let paddleBody = nodeA as CCSprite
         println("PADDLE energy \(CGFloat(energy))")
         let player = nodeA.parent
-        if let paddle = nodeA.parent as? CCSprite {
-            if energy > 400 {
-                gamePhysicsNode.space.addPostStepBlock({ () -> Void in
-                    paddle.animationManager.runAnimationsForSequenceNamed("paddleHardHit")
-                    }, key: paddle)
-                GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 1.0)
-            } else {
-                gamePhysicsNode.space.addPostStepBlock({ () -> Void in
-                    paddle.animationManager.runAnimationsForSequenceNamed("paddleSoftHit")
-                    }, key: paddle)
-                GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 0.6)
-            }
+        if energy > 400 {
+            gamePhysicsNode.space.addPostStepBlock({ () -> Void in
+                if player.name == "pink" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHit")
+                } else if player.name == "green" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHitTop")
+                } else if player.name == "red" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHitRight")
+                } else if player.name == "blue" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHitLeft")
+                }
+                }, key: paddleBody)
+            GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 1.0)
+        } else {
+            gamePhysicsNode.space.addPostStepBlock({ () -> Void in
+                if player.name == "pink" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHit")
+                } else if player.name == "green" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHitTop")
+                } else if player.name == "red" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHitRight")
+                } else if player.name == "blue" {
+                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHitLeft")
+                }
+                }, key: paddleBody)
+            GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 0.6)
         }
     }
     
     //    add spark particle when ball bounce on edges
     func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, edge nodeA: CCPhysicsNode!, ball nodeB: Ball!) {
         let energy = pair.totalKineticEnergy
-                println("energy \(CGFloat(energy))")
+        println("energy \(CGFloat(energy))")
         let spark = CCBReader.load("Spark") as! CCParticleSystem
         spark.position = nodeB.position
         spark.particlePositionType = CCParticleSystemPositionType.Free
@@ -284,7 +298,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         if gameStatus == .Ended {
-//            playerWonLabel.removeAllChildrenWithCleanup(true)
+            //            playerWonLabel.removeAllChildrenWithCleanup(true)
             for child in children {
                 if let wonLabel = child as? CCLabelTTF {
                     wonLabel.removeFromParentAndCleanup(true)
@@ -296,8 +310,8 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     
     
-
-
+    
+    
     
     
     func twoPlayers() {

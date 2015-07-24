@@ -34,6 +34,7 @@ class Menu: CCNode {
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
+        menuBody.opacity = 0.1
         addDropShadow()
         if gameStatus == .Starting {
             twoPlayers.opacity = 0.5
