@@ -27,8 +27,16 @@ class PlayerContainer : CCNode {
     var previousTouch = CGPointZero
     var playerPosition : PlayerPosition = .Bottom
     var didLose = false
-
-
+    
+    
+    let playerConfigs = [
+        ["playerPosition" : PlayerPosition.Left,   "paddle" : 90,  "goal" : 90, "color" : "blue",  "position" : ["x": 195, "y": 150]],
+        ["playerPosition" : PlayerPosition.Right,  "paddle" : -90, "goal" : 90, "color" : "red",   "position" : ["x": 115, "y": 150]],
+        ["playerPosition" : PlayerPosition.Bottom, "paddle" : 0,   "goal" : 0,  "color" : "pink",  "position" : ["x": 150, "y": 195]],
+        ["playerPosition" : PlayerPosition.Top,    "paddle" : 180, "goal" : 0,  "color" : "green", "position" : ["x": 150, "y": 115]],
+    ]
+    
+    
     var score : Int = 5 {
         didSet {
             // update label
@@ -50,49 +58,18 @@ class PlayerContainer : CCNode {
         goal.physicsBody.sensor = true
     }
     
-    func setupPlayer() {
-        if name == "player1" {
-            playerPosition = .Left
-            player.paddle.rotation = 90
-            circle.name = "blue"
-            player.name = "blue"
-            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-blue.png")
-            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-blue.png")
-            goal.rotation = 90
-            goal.position = CGPoint(x: 195, y: 150)
-
-        }
+    func setupPlayer(index : Int) {
+        let config = playerConfigs[index]
+        let color = config["color"] as! String
         
-        if name == "player2" {
-            playerPosition = .Right
-            player.paddle.rotation = -90
-            circle.name = "red"
-            player.name = "red"
-            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-red.png")
-            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-red.png")
-            goal.rotation = 90
-            goal.position = CGPoint(x: 115, y: 150)
-        }
-        if name == "player3" {
-            playerPosition = .Bottom
-            player.paddle.rotation = 0
-            circle.name = "pink"
-            player.name = "pink"
-            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-pink.png")
-            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-pink.png")
-            goal.position = CGPoint(x: 150, y: 195)
-        }
-        
-        if name == "player4" {
-            playerPosition = .Top
-            player.paddle.rotation = 180
-            circle.name = "green"
-            player.name = "green"
-            circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-green.png")
-            player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-green.png")
-            goal.position = CGPoint(x: 150, y: 115)
-        }
-        
+        playerPosition = config["playerPosition"] as! PlayerPosition
+        player.paddle.rotation = config["paddle"] as! Float
+        circle.name = color
+        player.name = color
+        circle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/circles/circle-\(color).png")
+        player.paddle.spriteFrame = CCSpriteFrame(imageNamed: "Paddle Battle/paddles/paddle-\(color).png")
+        goal.rotation = config["goal"] as! Float
+        goal.position =  CGPoint(x: config["x"] as! CGFloat, y: config["y"] as! CGFloat)
         setupPlayerScore()
     }
     
@@ -115,41 +92,40 @@ class PlayerContainer : CCNode {
         })]))
     }
     
-    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-
-    }
+    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) { }
     
     override func touchMoved(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         if gameStatus == .Running {
-            rotatePaddle(touch)
+            if !didLose {
+                rotatePaddle(touch)
+            }
             previousTouch = touch.locationInNode(self)
         }
     }
-
+    
     
     private func rotatePaddle(touch: CCTouch) {
-        if !didLose {
-            let touchLocation = touch.locationInNode(self)
-            var delta : CGFloat
-            switch playerPosition {
-            case .Top:
-                delta = -(touchLocation.x - previousTouch.x)
-            case .Bottom:
-                delta = (touchLocation.x - previousTouch.x)
-            case .Left:
-                delta = -(touchLocation.y - previousTouch.y)
-            case .Right:
-                delta = (touchLocation.y - previousTouch.y)
-            }
-            
-            delta = min(4, delta)
-            delta = max(-4, delta)
-            var result = player.rotation + Float(delta)
-            result = min(maxRotation, result)
-            result = max(-maxRotation, result)
-            player.rotation = result
+        let touchLocation = touch.locationInNode(self)
+        var delta : CGFloat
+        
+        switch player.paddle.color {
+        case "green":
+            delta = -(touchLocation.x - previousTouch.x)
+        case "pink":
+            delta = (touchLocation.x - previousTouch.x)
+        case "blue":
+            delta = -(touchLocation.y - previousTouch.y)
+        case "red":
+            delta = (touchLocation.y - previousTouch.y)
+        default:
+            break
         }
         
+        delta = min(4, delta)
+        delta = max(-4, delta)
+        var result = player.rotation + Float(delta)
+        result = min(maxRotation, result)
+        result = max(-maxRotation, result)
+        player.rotation = result
     }
-
 }

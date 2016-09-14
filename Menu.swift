@@ -11,6 +11,7 @@ protocol MenuDelegate {
     func threePlayers()
     func fourPlayers()
     func unpauseGame()
+    func continueGame()
 }
 
 import Foundation
@@ -26,6 +27,7 @@ class Menu: CCNode {
     weak var toggleCasualMode : CCSprite!
     weak var menuContainer : CCNode!
     weak var menuBody : CCSprite!
+    weak var exitMenu : CCSprite!
     weak var noOfPlayersLabel : CCLabelTTF!
     
     var arrayOfButtons = [CCSprite]()
@@ -34,29 +36,31 @@ class Menu: CCNode {
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
-        menuBody.opacity = 0.1
-        addDropShadow()
-        if gameStatus == .Starting {
-            twoPlayers.opacity = 0.5
-            threePlayers.opacity = 0.5
-            continueButton.visible = false
-        }
+        twoPlayers.opacity = 0.5
+        threePlayers.opacity = 0.5
+        toggleHardMode.opacity = 0.5
+        continueButton.visible = false
+        
         
         arrayOfButtons = [twoPlayers, threePlayers, fourPlayers]
     }
     
     func addDropShadow() {
-        var shadow = CCEffectDropShadow(shadowOffset: GLKVector2Make(3, -5), shadowColor: CCColor.whiteColor(), blurRadius: 0)
-        menuBody.effect = shadow
+        //        var shadow = CCEffectDropShadow(shadowOffset: GLKVector2Make(0, -5), shadowColor: CCColor.blackColor(), blurRadius: 10)
+        //        menuBody.effect = shadow
     }
     
     func startGame() {
         let scene = CCBReader.loadAsScene("MainScene")
-        CCDirector.sharedDirector().replaceScene(scene, withTransition: CCTransition(fadeWithDuration: 0.25))
+        CCDirector.sharedDirector().replaceScene(scene, withTransition: CCTransition(fadeWithDuration: 0.2))
     }
     
     func continueTapped() {
         delegate?.unpauseGame()
+    }
+    
+    func runGameAfterPaused() {
+        delegate?.continueGame()
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
@@ -87,7 +91,7 @@ class Menu: CCNode {
         let index = find(arrayOfButtons, playersButton)
         playersButton.opacity = 1.0
         GameSettings.activePlayers = index! + 2
-        noOfPlayersLabel.string = "Start \(index! + 2) players game"
+        noOfPlayersLabel.string = "Start \(index! + 2) player game"
         for i in 0..<arrayOfButtons.count {
             if index == i {
                 continue

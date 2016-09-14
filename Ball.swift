@@ -37,17 +37,19 @@ class Ball: CCSprite {
     func addBallAndApplyImpulse(speed: CGFloat) {
         var velocityX = CGFloat(arc4random_uniform(6) + 18)
         var velocityY = CGFloat(arc4random_uniform(6) + 5)
+        var x = CGFloat(0), y = CGFloat(0)
         gameScene?.gamePhysicsNode.addChild(self)
         switch ballCorner {
         case .BottomLeft:
-            physicsBody.applyImpulse(CGPoint(x: velocityX * speed, y: velocityY * speed))
+            x = velocityX * speed; y = velocityY * speed
         case .BottomRight:
-            physicsBody.applyImpulse(CGPoint(x: -velocityX * speed, y: velocityY * speed))
+            x = -velocityX * speed; y = velocityY * speed
         case .TopLeft:
-            physicsBody.applyImpulse(CGPoint(x: velocityX * speed, y: -velocityY * speed))
+            x = velocityX * speed; y = -velocityY * speed
         case .TopRight:
-            physicsBody.applyImpulse(CGPoint(x: -velocityX * speed, y: -velocityY * speed))
+            x = -velocityX * speed; y = -velocityY * speed
         }
+        physicsBody.applyImpulse(CGPoint(x: x, y: y))
         gameScene?.balls.append(self)
         GameSound.sharedInstance.playSound(GameSettings.spawnSound, volume: 1.0)
     }
@@ -78,12 +80,12 @@ class Ball: CCSprite {
     
     func limitBallSpeed() {
         //       Clamp the speed of the ball manually between Min and Max Speed values
-//        println("Ball speed \(ccpLength(physicsBody.velocity))")
+        DebugLog("Ball speed \(ccpLength(physicsBody.velocity))")
         if ccpLength(physicsBody.velocity) > maxSpeed {
-            println("TOO FAST")
+            DebugLog("TOO FAST")
             physicsBody.velocity = ccpMult(physicsBody.velocity, 0.8)
         } else if ccpLength(physicsBody.velocity) < minSpeed {
-            println("TOO SLOW")
+            DebugLog("TOO SLOW")
             physicsBody.velocity = ccpMult(physicsBody.velocity, 1.2)
         }
 

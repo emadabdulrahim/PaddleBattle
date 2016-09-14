@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>269</integer>
+	<integer>296</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -53,7 +53,7 @@
 				<key>displayName</key>
 				<string>background</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>backgroundNode</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -191,6 +191,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -1494,8 +1496,7 @@
 						<string>Text</string>
 						<key>value</key>
 						<array>
-							<string>5
-</string>
+							<string></string>
 							<false/>
 						</array>
 					</dict>
@@ -1505,7 +1506,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Courier-Bold</string>
+						<string>HelveticaNeue-Bold</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1514,7 +1515,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>35</real>
+							<real>40</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1602,7 +1603,7 @@
 							<real>0.0</real>
 							<real>0.0</real>
 							<real>0.0</real>
-							<real>0.0</real>
+							<real>0.50999999046325684</real>
 						</array>
 					</dict>
 					<dict>
@@ -1612,7 +1613,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
+							<real>5</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1624,7 +1625,7 @@
 						<key>value</key>
 						<array>
 							<real>0.0</real>
-							<real>0.0</real>
+							<real>1</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -1939,9 +1940,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.24884793162345886</real>
-							<real>0.24884793162345886</real>
-							<real>0.24884793162345886</real>
+							<real>1</real>
+							<real>0.99997437000274658</real>
+							<real>0.99999129772186279</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -1981,9 +1982,9 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<real>0.0</real>
+							<real>1</real>
+							<real>0.99997437000274658</real>
+							<real>0.99999129772186279</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -2050,8 +2051,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 				<key>seqExpanded</key>
 				<true/>
 			</dict>

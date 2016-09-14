@@ -25,6 +25,7 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     weak var gamePhysicsNode : CCPhysicsNode!
     weak var menuLayer : Menu!
     weak var lightNode : CCLightNode!
+    weak var backgroundNode : CCSprite!
     
     var placeHolders = [CCNode]()
     var players = [PlayerContainer]()
@@ -38,6 +39,20 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     var difficultyTimer : CCTimer!
     var elapsedGameTime : CCTime = 0
     var intervalTime = CCTime(15)
+    let animations = [
+        true : [
+            "pink"  : "paddleHardHit",
+            "green" : "paddleHardHitTop",
+            "red"   : "paddleHardHitRight",
+            "blue"  : "paddleHardHitLeft"
+        ],
+        false : [
+            "pink"  : "paddleSoftHit",
+            "green" : "paddleSoftHitTop",
+            "red"   : "paddleSoftHitRight",
+            "blue"  : "paddleSoftHitLeft"
+        ]
+    ]
     
     
     
@@ -57,24 +72,19 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         }
         setupPlayers()
         eliminateInActivePlayers()
-        //        CCDirector.sharedDirector().scheduler.timeScale = 0.5
-        //        //self.scale = 1.5
-        //
-        //        var actionScale:CCActionScaleBy = CCActionScaleBy(duration: 1.0, scale: 0.50)
-        //        self.runAction(actionScale)
     }
     
     func setupPlayers() {
-        println("Number Of Players \(GameSettings.numberOfPlayers)")
+        DebugLog("Number Of Players \(GameSettings.numberOfPlayers)")
         for i in 0..<4 {
             var playerContainer = CCBReader.load("PlayerContainer") as! PlayerContainer
             playerContainer.position = placeHolders[i].position
-            playerContainer.name = "player\(i+1)"
-            playerContainer.setupPlayer()
+//            playerContainer.name = "player\(i)"
+            playerContainer.setupPlayer(i)
             gamePhysicsNode.addChild(playerContainer)
             addChild(playerContainer.scoreManager)
             playerContainer.scoreManager.position = centerNode.position
-            println(playerContainer.scoreManager.position)
+            DebugLog("\(playerContainer.scoreManager.position)")
             players.append(playerContainer)
         }
     }
@@ -97,24 +107,23 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         timeToStart--
         var labelText : String
         labelText = "\(timeToStart)"
-        if timeToStart == 1 {
+        if timeToStart == 0 {
             labelText = "GO!"
         }
         countdownLabel.string = labelText
-        countdownLabel.zOrder = 300
-        
-        var labelAction = CCActionSequence(array: [CCActionEaseInOut(action: CCActionScaleBy(duration:0.4, scale: 1.5), rate: 5), CCActionFadeOut(duration: 0.4)])
+        countdownLabel.zOrder = 125
+        var labelAction = CCActionSequence(array: [CCActionEaseInOut(action: CCActionScaleBy(duration:0.4, scale: 1.5), rate: 5), CCActionFadeOut(duration: 0.25)])
         countdownLabel.runAction(labelAction)
         
-        if timeToStart == 0 {
+        if timeToStart < 0 {
             self.removeChild(countdownLabel, cleanup: true)
         }
     }
     
     override func onEnterTransitionDidFinish() {
-        labelTimeManager = schedule("setupCountDownLabel", interval: 1, repeat: UInt(timeToStart), delay: 0)
-        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 3)
-        difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*3)
+        labelTimeManager = schedule("setupCountDownLabel", interval: 1, repeat: UInt(timeToStart), delay: 0.3)
+        ballTimeManager = schedule("createNewBall", interval: intervalTime, repeat: 99999, delay: 4)
+        difficultyTimer = schedule("increaseDiffculty", interval: intervalTime*2, repeat: 99999, delay: intervalTime*2)
     }
     
     func increaseDiffculty() {
@@ -169,20 +178,24 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
         if gameStatus == .Ended {
             menuLayer.continueButton.visible = false
         }
+        menuLayer.visible = true
         menuLayer.animationManager.runAnimationsForSequenceNamed("openMenu")
         menuLayer.zOrder = 200
-        menuLayer.visible = true
     }
     
     func unpauseGame() {
-        menuLayer.animationManager.runAnimationsForSequenceNamed("closeMenu")
-        gameStatus = .Running
+        menuLayer.animationManager.runAnimationsForSequenceNamed("closeMenuInGame")
+    }
+    
+    func continueGame() {
         paused = false
+        gameStatus = .Running
+        menuLayer.visible = false
     }
     
     //    Ball colliding with Goal Node, decrease player score
     func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, goal nodeA: CCNode!, ball nodeB: Ball!) -> ObjCBool {
-        println("Collision Happened")
+//        println("Collision Happened")
         let goalNode = nodeA
         if gameStatus == .Ended {
             return false
@@ -198,45 +211,23 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     }
     
     //    shake paddle when ball hits it hard
-    func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, paddle nodeA: CCSprite!, ball nodeB: Ball!) {
-        let energy = pair.totalKineticEnergy
+    func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, ball nodeA: Ball!, paddle nodeB: CCSprite!) {
         let ball = nodeB
-        let paddleBody = nodeA as CCSprite
-        println("PADDLE energy \(CGFloat(energy))")
-        let player = nodeA.parent
-        if energy > 400 {
-            gamePhysicsNode.space.addPostStepBlock({ () -> Void in
-                if player.name == "pink" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHit")
-                } else if player.name == "green" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHitTop")
-                } else if player.name == "red" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHitRight")
-                } else if player.name == "blue" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleHardHitLeft")
-                }
-                }, key: paddleBody)
-            GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 1.0)
-        } else {
-            gamePhysicsNode.space.addPostStepBlock({ () -> Void in
-                if player.name == "pink" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHit")
-                } else if player.name == "green" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHitTop")
-                } else if player.name == "red" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHitRight")
-                } else if player.name == "blue" {
-                    paddleBody.animationManager.runAnimationsForSequenceNamed("paddleSoftHitLeft")
-                }
-                }, key: paddleBody)
-            GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 0.6)
-        }
+        let paddleBody = nodeB as CCSprite
+        var energy : CGFloat = pair.totalKineticEnergy
+//        println("PADDLE energy \(energy)")
+        let player = nodeB.parent
+        gamePhysicsNode.space.addPostStepBlock({ () -> Void in
+            paddleBody.animationManager.runAnimationsForSequenceNamed(self.animations[pair.totalKineticEnergy > 400]![player.name])
+            }, key: paddleBody)
+        GameSound.sharedInstance.playSound(GameSettings.paddleHitSound, volume: 1.0)
+      
     }
     
     //    add spark particle when ball bounce on edges
     func ccPhysicsCollisionPostSolve(pair: CCPhysicsCollisionPair!, edge nodeA: CCPhysicsNode!, ball nodeB: Ball!) {
-        let energy = pair.totalKineticEnergy
-        println("energy \(CGFloat(energy))")
+        //        let energy = pair.totalKineticEnergy
+        //        println("energy \(CGFloat(energy))")
         let spark = CCBReader.load("Spark") as! CCParticleSystem
         spark.position = nodeB.position
         spark.particlePositionType = CCParticleSystemPositionType.Free
@@ -298,7 +289,6 @@ class MainScene: CCNode, CCPhysicsCollisionDelegate, MenuDelegate {
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         if gameStatus == .Ended {
-            //            playerWonLabel.removeAllChildrenWithCleanup(true)
             for child in children {
                 if let wonLabel = child as? CCLabelTTF {
                     wonLabel.removeFromParentAndCleanup(true)

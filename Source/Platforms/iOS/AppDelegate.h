@@ -25,6 +25,9 @@
 
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 
 @interface AppController : CCAppDelegate
 {

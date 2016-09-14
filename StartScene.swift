@@ -25,12 +25,11 @@ class StartScene: CCScene, MenuDelegate {
     }
     
     func setupPlayers() {
-        println("Number Of Players \(GameSettings.numberOfPlayers)")
+//        println("Number Of Players \(GameSettings.numberOfPlayers)")
         for i in 0..<4 {
             var playerContainer = CCBReader.load("PlayerContainer") as! PlayerContainer
             playerContainer.position = placeHolders[i].position
-            playerContainer.name = "player\(i+1)"
-            playerContainer.setupPlayer()
+            playerContainer.setupPlayer(i)
             addChild(playerContainer)
             players.append(playerContainer)
         }
@@ -64,6 +63,9 @@ class StartScene: CCScene, MenuDelegate {
         playerX.player.paddle.opacity = 1
     }
 
+    func continueGame() {
+        
+    }
     
     func unpauseGame() {
         

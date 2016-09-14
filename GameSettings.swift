@@ -15,6 +15,8 @@ enum GameStatus {
     case Ended
 }
 
+let Debug = false
+
 var deadPlayerCounter = 0
 
 
@@ -27,4 +29,11 @@ struct GameSettings {
     static var numberOfPlayers  = 4
     static var activePlayers = 4
 //    static var teamPlay = false
+    
+}
+
+func DebugLog(message: String) {
+    if Debug {
+        println(message)
+    }
 }
